@@ -72,8 +72,8 @@ final class IndirectTests: XCTestCase {
 		@Indirect var value2 = MyStruct(name: "blih", other: Other(number: 1))
 		
 		let data2 = try JSONEncoder().encode(value2)
-		let decoded2 = try JSONDecoder().decode(MyStruct.self, from: data2)
+		let decoded2 = try JSONDecoder().decode(Indirect<MyStruct>.self, from: data2)
 		
-		XCTAssertEqual(value2, decoded2)
+		XCTAssertEqual(value2, decoded2.wrappedValue)
 	}
 }

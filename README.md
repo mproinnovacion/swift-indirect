@@ -20,6 +20,14 @@ struct BigStruct {
 } 
 ```
 
+You can now use your BigStruct as you were before, but without stack overflow issues.
+
+## Links
+
+https://forums.swift.org/t/large-structs-and-stack-overflow/44820/5
+https://twitter.com/jckarter/status/1355916944403095554
+https://forums.swift.org/t/large-struct-cow-optimization/46921
+
 ## License
 
 This library is released under the MIT license.
