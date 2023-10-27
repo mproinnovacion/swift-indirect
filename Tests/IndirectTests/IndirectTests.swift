@@ -1,5 +1,5 @@
 import XCTest
-@testable import Indirect
+import Indirect
 
 struct Other: Equatable, Codable {
 	@Indirect var number: Int
@@ -13,7 +13,7 @@ struct Other2: Equatable, Codable {
 struct MyStruct: Equatable, Codable {
 	@Indirect var name: String
 	@Indirect var other: Other
-	@Indirect var other2: Other2?
+	@Indirect var other2: Other2? = nil
 }
 
 final class IndirectTests: XCTestCase {
@@ -75,5 +75,23 @@ final class IndirectTests: XCTestCase {
 		let decoded2 = try JSONDecoder().decode(Indirect<MyStruct>.self, from: data2)
 		
 		XCTAssertEqual(value2, decoded2.wrappedValue)
+	}
+	
+	func testDecodeMissingProperty() {
+		let text = """
+		{
+			"name": "Name",
+			"other": {
+				"number": 7
+			}
+		}
+		"""
+
+		let data = text.data(using: .utf8)!
+		let parsed = try! JSONDecoder().decode(MyStruct.self, from: data)
+
+		XCTAssertEqual(parsed.name, "Name")
+		XCTAssertEqual(parsed.other.number, 7)
+		XCTAssertNil(parsed.other2)
 	}
 }

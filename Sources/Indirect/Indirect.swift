@@ -30,11 +30,11 @@ extension Indirect: Encodable where T: Encodable {
 }
 
 extension KeyedDecodingContainer {
-	func decode<T: Decodable>(_: Indirect<T>.Type, forKey key: Key) throws -> Indirect<T> {
+	public func decode<T: Decodable>(_: Indirect<T>.Type, forKey key: Key) throws -> Indirect<T> {
 		return try Indirect(wrappedValue: decode(T.self, forKey: key))
 	}
 	
-	func decode<T: Decodable>(_: Indirect<Optional<T>>.Type, forKey key: Key) throws -> Indirect<Optional<T>> {
+	public func decode<T: Decodable>(_: Indirect<Optional<T>>.Type, forKey key: Key) throws -> Indirect<Optional<T>> {
 		return try Indirect(wrappedValue: decodeIfPresent(T.self, forKey: key))
 	}
 }
